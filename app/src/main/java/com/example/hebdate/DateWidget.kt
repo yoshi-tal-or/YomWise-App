@@ -4,7 +4,7 @@ import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
 
-class DateWidget : AppWidgetProvider() {
+open class DateWidget : AppWidgetProvider() {
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         Updater.refresh(context)
     }
@@ -13,3 +13,7 @@ class DateWidget : AppWidgetProvider() {
         Updater.refresh(context)
     }
 }
+
+class DateWidget3x2 : DateWidget()
+class DateWidget2x2 : DateWidget()
+class DateWidget4x1 : DateWidget()

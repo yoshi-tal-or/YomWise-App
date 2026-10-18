@@ -69,21 +69,35 @@ object Updater {
 
     private fun widgets(ctx: Context, p: Prefs, i: Info) {
         val mgr = AppWidgetManager.getInstance(ctx)
-        val ids = mgr.getAppWidgetIds(ComponentName(ctx, DateWidget::class.java))
-        if (ids.isEmpty()) return
-        val rv = RemoteViews(ctx.packageName, R.layout.widget)
-        rv.setTextViewText(R.id.w_title, i.title)
-        fun line(id: Int, show: Boolean, text: String) {
-            rv.setTextViewText(id, text)
-            rv.setViewVisibility(id, if (show && text.isNotBlank()) View.VISIBLE else View.GONE)
+        val specs = listOf(
+            DateWidget::class.java to R.layout.widget,
+            DateWidget3x2::class.java to R.layout.widget_3x2,
+            DateWidget2x2::class.java to R.layout.widget_2x2,
+            DateWidget4x1::class.java to R.layout.widget_4x1
+        )
+        for ((cls, layout) in specs) {
+            val ids = mgr.getAppWidgetIds(ComponentName(ctx, cls))
+            if (ids.isEmpty()) continue
+            val rv = RemoteViews(ctx.packageName, layout)
+            rv.setTextViewText(R.id.w_title, i.title)
+            if (layout == R.layout.widget_4x1) {
+                val text = lines(p, i).take(2).joinToString("  ·  ")
+                rv.setTextViewText(R.id.w_compact, text)
+                rv.setViewVisibility(R.id.w_compact, if (text.isBlank()) View.GONE else View.VISIBLE)
+            } else {
+                fun line(id: Int, show: Boolean, text: String) {
+                    rv.setTextViewText(id, text)
+                    rv.setViewVisibility(id, if (show && text.isNotBlank()) View.VISIBLE else View.GONE)
+                }
+                line(R.id.w_parsha, p.showParsha, i.parsha)
+                line(R.id.w_chag, p.showChag, i.chag)
+                line(R.id.w_daf, p.showDaf, i.daf)
+                line(R.id.w_candle, p.showCandle, i.candle)
+                line(R.id.w_zman, p.showZman, i.nextZman)
+            }
+            rv.setOnClickPendingIntent(R.id.root, openApp(ctx))
+            mgr.updateAppWidget(ids, rv)
         }
-        line(R.id.w_parsha, p.showParsha, i.parsha)
-        line(R.id.w_chag, p.showChag, i.chag)
-        line(R.id.w_daf, p.showDaf, i.daf)
-        line(R.id.w_candle, p.showCandle, i.candle)
-        line(R.id.w_zman, p.showZman, i.nextZman)
-        rv.setOnClickPendingIntent(R.id.root, openApp(ctx))
-        mgr.updateAppWidget(ids, rv)
     }
 
     private fun schedule(ctx: Context, at: Long) {

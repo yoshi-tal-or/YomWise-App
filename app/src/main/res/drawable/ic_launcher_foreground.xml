@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <!-- calendar page -->
+    <path android:fillColor="#FFFFFF"
+        android:pathData="M34,32h40a4,4 0 0,1 4,4v42a4,4 0 0,1 -4,4h-40a4,4 0 0,1 -4,-4v-42a4,4 0 0,1 4,-4z" />
+    <!-- gold header band -->
+    <path android:fillColor="#F2B705"
+        android:pathData="M34,32h40a4,4 0 0,1 4,4v8h-48v-8a4,4 0 0,1 4,-4z" />
+    <!-- binder rings -->
+    <path android:fillColor="#FFFFFF" android:pathData="M40,27h4v9h-4z" />
+    <path android:fillColor="#FFFFFF" android:pathData="M64,27h4v9h-4z" />
+    <!-- star of David -->
+    <path android:fillColor="#1B3A6B"
+        android:pathData="M54,51L64.4,69L43.6,69Z M54,75L43.6,57L64.4,57Z" />
+</vector>

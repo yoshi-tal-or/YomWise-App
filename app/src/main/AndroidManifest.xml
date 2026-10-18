@@ -7,7 +7,8 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:label="Hebrew Date"
         android:theme="@android:style/Theme.Material.Light">
 
@@ -29,13 +30,29 @@
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".DateWidget" android:exported="true">
+        <receiver android:name=".DateWidget" android:exported="true" android:label="Hebrew Date 4×2">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/widget_info" />
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_info" />
+        </receiver>
+        <receiver android:name=".DateWidget3x2" android:exported="true" android:label="Hebrew Date 3×2">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_info_3x2" />
+        </receiver>
+        <receiver android:name=".DateWidget2x2" android:exported="true" android:label="Hebrew Date 2×2">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_info_2x2" />
+        </receiver>
+        <receiver android:name=".DateWidget4x1" android:exported="true" android:label="Hebrew Date 4×1">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_info_4x1" />
         </receiver>
     </application>
 </manifest>
