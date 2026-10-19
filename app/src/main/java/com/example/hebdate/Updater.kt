@@ -42,7 +42,7 @@ object Updater {
     private fun notification(ctx: Context, p: Prefs, i: Info) {
         val nm = ctx.getSystemService(NotificationManager::class.java)
         if (!p.notifOn) { nm.cancel(1); return }
-        val ch = NotificationChannel(CH, "Hebrew date", NotificationManager.IMPORTANCE_LOW)
+        val ch = NotificationChannel(CH, "YomWise date", NotificationManager.IMPORTANCE_LOW)
         ch.setShowBadge(false)
         nm.createNotificationChannel(ch)
 

@@ -10,7 +10,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:label="Hebrew Date"
+        android:label="YomWise"
         android:theme="@android:style/Theme.Material.Light">
 
         <activity android:name=".MainActivity" android:exported="true">
@@ -31,25 +31,25 @@
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".DateWidget" android:exported="true" android:label="Hebrew Date 4×2">
+        <receiver android:name=".DateWidget" android:exported="true" android:label="YomWise 4×2">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
             <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_info" />
         </receiver>
-        <receiver android:name=".DateWidget3x2" android:exported="true" android:label="Hebrew Date 3×2">
+        <receiver android:name=".DateWidget3x2" android:exported="true" android:label="YomWise 3×2">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
             <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_info_3x2" />
         </receiver>
-        <receiver android:name=".DateWidget2x2" android:exported="true" android:label="Hebrew Date 2×2">
+        <receiver android:name=".DateWidget2x2" android:exported="true" android:label="YomWise 2×2">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
             <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_info_2x2" />
         </receiver>
-        <receiver android:name=".DateWidget4x1" android:exported="true" android:label="Hebrew Date 4×1">
+        <receiver android:name=".DateWidget4x1" android:exported="true" android:label="YomWise 4×1">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
