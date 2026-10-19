@@ -6,42 +6,22 @@
     android:orientation="vertical"
     android:padding="12dp"
     android:background="@drawable/widget_bg">
-
-    <TextView
-        android:id="@+id/w_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="#FFFFFF"
-        android:textSize="26sp"
-        android:textStyle="bold" />
-    <TextView
-        android:id="@+id/w_parsha"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="#FFFFFF"
-        android:textSize="15sp" />
-    <TextView
-        android:id="@+id/w_chag"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="#FFFFFF"
-        android:textSize="15sp" />
-    <TextView
-        android:id="@+id/w_daf"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="#FFFFFF"
-        android:textSize="15sp" />
-    <TextView
-        android:id="@+id/w_candle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="#FFFFFF"
-        android:textSize="15sp" />
-    <TextView
-        android:id="@+id/w_zman"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="#CCCCCC"
-        android:textSize="13sp" />
+    <TextView android:id="@+id/w_title" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1.5"
+        android:gravity="center_vertical" android:textColor="#FFFFFF" android:textStyle="bold" android:maxLines="1"
+        android:autoSizeTextType="uniform" android:autoSizeMinTextSize="10sp" android:autoSizeMaxTextSize="36sp" android:autoSizeStepGranularity="1sp" />
+    <TextView android:id="@+id/w_parsha" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
+        android:gravity="center_vertical" android:textColor="#FFFFFF" android:maxLines="1"
+        android:autoSizeTextType="uniform" android:autoSizeMinTextSize="10sp" android:autoSizeMaxTextSize="20sp" android:autoSizeStepGranularity="1sp" />
+    <TextView android:id="@+id/w_chag" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
+        android:gravity="center_vertical" android:textColor="#FFFFFF" android:maxLines="1"
+        android:autoSizeTextType="uniform" android:autoSizeMinTextSize="10sp" android:autoSizeMaxTextSize="20sp" android:autoSizeStepGranularity="1sp" />
+    <TextView android:id="@+id/w_daf" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
+        android:gravity="center_vertical" android:textColor="#FFFFFF" android:maxLines="1"
+        android:autoSizeTextType="uniform" android:autoSizeMinTextSize="10sp" android:autoSizeMaxTextSize="20sp" android:autoSizeStepGranularity="1sp" />
+    <TextView android:id="@+id/w_candle" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
+        android:gravity="center_vertical" android:textColor="#FFFFFF" android:maxLines="1"
+        android:autoSizeTextType="uniform" android:autoSizeMinTextSize="10sp" android:autoSizeMaxTextSize="20sp" android:autoSizeStepGranularity="1sp" />
+    <TextView android:id="@+id/w_zman" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
+        android:gravity="center_vertical" android:textColor="#CCCCCC" android:maxLines="1"
+        android:autoSizeTextType="uniform" android:autoSizeMinTextSize="10sp" android:autoSizeMaxTextSize="20sp" android:autoSizeStepGranularity="1sp" />
 </LinearLayout>

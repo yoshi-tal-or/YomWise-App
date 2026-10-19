@@ -7,10 +7,14 @@
     android:gravity="center_vertical"
     android:paddingLeft="12dp"
     android:paddingRight="12dp"
+    android:paddingTop="4dp"
+    android:paddingBottom="4dp"
     android:background="@drawable/widget_bg">
-    <TextView android:id="@+id/w_title" android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:textColor="#FFFFFF" android:textSize="22sp" android:textStyle="bold" android:maxLines="1" />
-    <TextView android:id="@+id/w_compact" android:layout_width="0dp" android:layout_height="wrap_content"
-        android:layout_weight="1" android:paddingLeft="12dp" android:paddingRight="12dp"
-        android:textColor="#FFFFFF" android:textSize="12sp" android:maxLines="2" android:ellipsize="end" />
+    <TextView android:id="@+id/w_title" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="0.45"
+        android:gravity="center_vertical" android:textColor="#FFFFFF" android:textStyle="bold" android:maxLines="1"
+        android:autoSizeTextType="uniform" android:autoSizeMinTextSize="10sp" android:autoSizeMaxTextSize="26sp" android:autoSizeStepGranularity="1sp" />
+    <TextView android:id="@+id/w_compact" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="0.55"
+        android:gravity="center_vertical" android:paddingLeft="10dp" android:paddingRight="10dp"
+        android:textColor="#FFFFFF" android:maxLines="2"
+        android:autoSizeTextType="uniform" android:autoSizeMinTextSize="9sp" android:autoSizeMaxTextSize="16sp" android:autoSizeStepGranularity="1sp" />
 </LinearLayout>

@@ -39,6 +39,9 @@ class Prefs(ctx: Context) {
     var hebrew: Boolean
         get() = gb("hebrew", true)
         set(v) = sb("hebrew", v)
+    var showYear: Boolean
+        get() = gb("showYear", false)
+        set(v) = sb("showYear", v)
     /** 0 = sunset, 1 = nightfall, 2 = midnight */
     var flip: Int
         get() = gi("flip", 0)

@@ -203,6 +203,8 @@ class MainActivity : Activity() {
             if (he != p.hebrew) { p.hebrew = he; changed() }
         }
 
+        root.check("Show Hebrew year after the month", p.showYear) { p.showYear = it }
+
         // ---- Status bar ----
         root.header("Status bar")
         root.check("Show date in status bar", p.notifOn) { p.notifOn = it }

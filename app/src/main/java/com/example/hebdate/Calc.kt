@@ -63,7 +63,9 @@ object Calc {
         val dayFull = if (he) hdfHe.formatHebrewNumber(dayNum) else dayNum.toString()
         val iconDay = dayFull.replace("\u05F4", "").replace("\u05F3", "").replace("\"", "").replace("'", "")
         val month = hdf.formatMonth(jc)
-        val title = "$dayFull $month"
+        val yr = jc.getJewishYear()
+        val yearStr = if (he) hdfHe.formatHebrewNumber(yr / 1000) + hdfHe.formatHebrewNumber(yr % 1000) else yr.toString()
+        val title = if (p.showYear) "$dayFull $month, $yearStr" else "$dayFull $month"
 
         // Parsha (upcoming Shabbat)
         val sat = dateCal.clone() as Calendar
