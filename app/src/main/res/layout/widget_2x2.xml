@@ -6,9 +6,12 @@
     android:orientation="vertical"
     android:padding="8dp"
     android:background="@drawable/widget_bg">
-    <TextView android:id="@+id/w_title" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1.5"
+    <TextView android:id="@+id/w_title" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1.25"
         android:gravity="center_vertical" android:textColor="#FFFFFF" android:textStyle="bold" android:maxLines="1"
         android:autoSizeTextType="uniform" android:autoSizeMinTextSize="9sp" android:autoSizeMaxTextSize="24sp" android:autoSizeStepGranularity="1sp" />
+    <TextView android:id="@+id/w_omer" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
+        android:gravity="center_vertical" android:textColor="#FFFFFF" android:maxLines="1"
+        android:autoSizeTextType="uniform" android:autoSizeMinTextSize="9sp" android:autoSizeMaxTextSize="16sp" android:autoSizeStepGranularity="1sp" />
     <TextView android:id="@+id/w_parsha" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
         android:gravity="center_vertical" android:textColor="#FFFFFF" android:maxLines="1"
         android:autoSizeTextType="uniform" android:autoSizeMinTextSize="9sp" android:autoSizeMaxTextSize="16sp" android:autoSizeStepGranularity="1sp" />

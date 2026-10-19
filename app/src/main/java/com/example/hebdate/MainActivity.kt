@@ -281,6 +281,7 @@ class MainActivity : Activity() {
 
         // ---- Widget / details ----
         root.header("Show in widget and notification")
+        root.check("Omer count (during the Omer)", p.showOmer) { p.showOmer = it }
         root.check("Parsha", p.showParsha) { p.showParsha = it }
         root.check("Upcoming chag / special day", p.showChag) { p.showChag = it }
         root.check("Daf Yomi", p.showDaf) { p.showDaf = it }

@@ -15,6 +15,7 @@ data class Info(
     val iconDay: String,
     val iconMonth: String,
     val title: String,
+    val omer: String,
     val parsha: String,
     val chag: String,
     val daf: String,
@@ -24,6 +25,11 @@ data class Info(
 )
 
 object Calc {
+    private fun ordinal(n: Int): String {
+        val suffix = if (n % 100 in 11..13) "th" else when (n % 10) { 1 -> "st"; 2 -> "nd"; 3 -> "rd"; else -> "th" }
+        return "$n$suffix"
+    }
+
     private fun zc(geo: GeoLocation, cal: Calendar, candle: Int): ComplexZmanimCalendar {
         val z = ComplexZmanimCalendar(geo)
         z.setCalendar(cal.clone() as Calendar)
@@ -67,37 +73,103 @@ object Calc {
         val yearStr = if (he) hdfHe.formatHebrewNumber(yr / 1000) + hdfHe.formatHebrewNumber(yr % 1000) else yr.toString()
         val title = if (p.showYear) "$dayFull $month, $yearStr" else "$dayFull $month"
 
-        // Parsha (upcoming Shabbat)
+        // Omer count
+        val omerDay = jc.getDayOfOmer()
+        val omer = if (omerDay in 1..49) {
+            if (he) "עומר: יום ${hdfHe.formatHebrewNumber(omerDay)}" else "Omer: ${ordinal(omerDay)} day"
+        } else ""
+
+        // Parsha (upcoming Shabbat), then special Shabbat / Shabbat Mevorchim after commas
         val sat = dateCal.clone() as Calendar
         while (sat.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY) sat.add(Calendar.DATE, 1)
         val jcSat = JewishCalendar(sat)
         jcSat.setInIsrael(p.israel)
-        var parshaName = hdf.formatParsha(jcSat)
-        val parsha = if (parshaName.isNotBlank()) {
+        val parshaName = hdf.formatParsha(jcSat)
+        val parshaBase = if (parshaName.isNotBlank()) {
             (if (he) "פרשת " else "Parsha ") + parshaName
         } else {
             val yt = hdf.formatYomTov(jcSat)
             if (yt.isNotBlank()) (if (he) "שבת: " else "Shabbat: ") + yt else ""
         }
+        val sm = jcSat.getJewishMonth()
+        val sd = jcSat.getJewishDayOfMonth()
+        val leap = jcSat.isJewishLeapYear()
+        val adar = if (leap) 13 else 12
+        val prevAdar = if (leap) 12 else 11
+        var special = when {
+            (sm == prevAdar && sd in 25..30) || (sm == adar && sd == 1) -> if (he) "שקלים" else "Shekalim"
+            sm == adar && sd in 8..13 -> if (he) "זכור" else "Zachor"
+            sm == adar && sd in 17..23 -> if (he) "פרה" else "Parah"
+            (sm == adar && sd in 24..29) || (sm == 1 && sd == 1) -> if (he) "החודש" else "HaChodesh"
+            sm == 1 && sd in 8..14 -> if (he) "הגדול" else "HaGadol"
+            sm == 5 && sd in 4..9 -> if (he) "חזון" else "Chazon"
+            sm == 5 && sd in 11..16 -> if (he) "נחמו" else "Nachamu"
+            sm == 7 && sd in 3..9 -> if (he) "שובה" else "Shuva"
+            else -> ""
+        }
+        if (special.isEmpty() && (parshaName.contains("בשלח") || parshaName.contains("beshalach", ignoreCase = true))) {
+            special = if (he) "שירה" else "Shira"
+        }
+        var mevorchim = ""
+        if (sm != 6 && sd in 23..29) {
+            val nx = sat.clone() as Calendar
+            nx.add(Calendar.DATE, jcSat.getDaysInJewishMonth() - sd + 1)
+            mevorchim = (if (he) "שבת מברכים " else "Shabbat Mevorchim ") + hdf.formatMonth(JewishCalendar(nx))
+        }
+        val parsha = listOfNotNull(
+            parshaBase.takeIf { it.isNotBlank() },
+            special.takeIf { it.isNotEmpty() }?.let { (if (he) "שבת " else "Shabbat ") + it },
+            mevorchim.takeIf { it.isNotEmpty() }
+        ).joinToString(", ")
 
-        // Next chag / special day
+        // Next chag / special day, including today. Rosh Chodesh is added after a comma if it coincides.
         var chag = ""
         for (i in 0..60) {
             val c = dateCal.clone() as Calendar
             c.add(Calendar.DATE, i)
             val j = JewishCalendar(c)
             j.setInIsrael(p.israel)
-            if (j.getYomTovIndex() != -1) {
-                val nm = try { hdf.formatYomTov(j) } catch (e: Exception) { "" }
-                if (nm.isNotBlank()) {
-                    val whenTxt = when (i) {
-                        0 -> if (he) "היום" else "Today"
-                        1 -> if (he) "מחר" else "Tomorrow"
-                        else -> if (he) "בעוד $i ימים" else "in $i days"
-                    }
-                    chag = "$nm — $whenTxt"
-                    break
+            val parts = mutableListOf<String>()
+            val ytName = if (j.getYomTovIndex() != -1) {
+                try { hdf.formatYomTov(j) } catch (e: Exception) { "" }
+            } else ""
+            val ytIsRc = ytName.contains("חודש") || ytName.contains("chodesh", ignoreCase = true)
+            if (ytName.isNotBlank() && !ytIsRc) {
+                var n1 = ytName
+                val isHoshana = ytName.contains("הושענא") || ytName.contains("hoshana", ignoreCase = true)
+                if (j.isCholHamoed() && !isHoshana) {
+                    val n = j.getJewishDayOfMonth() - (if (p.israel) 15 else 16)
+                    if (n >= 1) n1 += if (he) " (יום ${hdfHe.formatHebrewNumber(n)})" else " (day $n)"
                 }
+                parts.add(n1)
+            }
+            if (j.isRoshChodesh()) {
+                val dom = j.getJewishDayOfMonth()
+                val monthCal = if (dom == 30) {
+                    val c2 = c.clone() as Calendar
+                    c2.add(Calendar.DATE, 1)
+                    JewishCalendar(c2)
+                } else j
+                var rc = (if (he) "ראש חודש " else "Rosh Chodesh ") + hdf.formatMonth(monthCal)
+                if (dom == 30) {
+                    rc += if (he) " (יום א׳)" else " (day 1)"
+                } else {
+                    val c0 = c.clone() as Calendar
+                    c0.add(Calendar.DATE, -1)
+                    if (JewishCalendar(c0).getJewishDayOfMonth() == 30) {
+                        rc += if (he) " (יום ב׳)" else " (day 2)"
+                    }
+                }
+                parts.add(rc)
+            }
+            if (parts.isNotEmpty()) {
+                val whenTxt = when (i) {
+                    0 -> if (he) "היום" else "Today"
+                    1 -> if (he) "מחר" else "Tomorrow"
+                    else -> if (he) "בעוד $i ימים" else "in $i days"
+                }
+                chag = parts.joinToString(", ") + " — " + whenTxt
+                break
             }
         }
 
@@ -150,6 +222,6 @@ object Calc {
         if (next != null) candidates.add(next.second.time + 5000L)
         val nextChange = candidates.minOrNull() ?: (now.time + 30 * 60 * 1000L)
 
-        return Info(iconDay, month, title, parsha, chag, daf, candle, nextZman, nextChange)
+        return Info(iconDay, month, title, omer, parsha, chag, daf, candle, nextZman, nextChange)
     }
 }

@@ -18,6 +18,7 @@ object Updater {
     private const val CH = "hebdate"
 
     fun lines(p: Prefs, i: Info): List<String> = listOfNotNull(
+        i.omer.takeIf { p.showOmer && it.isNotBlank() },
         i.parsha.takeIf { p.showParsha && it.isNotBlank() },
         i.chag.takeIf { p.showChag && it.isNotBlank() },
         i.daf.takeIf { p.showDaf && it.isNotBlank() },
@@ -89,6 +90,7 @@ object Updater {
                     rv.setTextViewText(id, text)
                     rv.setViewVisibility(id, if (show && text.isNotBlank()) View.VISIBLE else View.GONE)
                 }
+                line(R.id.w_omer, p.showOmer, i.omer)
                 line(R.id.w_parsha, p.showParsha, i.parsha)
                 line(R.id.w_chag, p.showChag, i.chag)
                 line(R.id.w_daf, p.showDaf, i.daf)
