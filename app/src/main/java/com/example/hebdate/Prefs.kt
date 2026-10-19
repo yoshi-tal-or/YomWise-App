@@ -52,6 +52,9 @@ class Prefs(ctx: Context) {
     var flip: Int
         get() = gi("flip", 0)
         set(v) = si("flip", v)
+    var widgetTap: Boolean
+        get() = gb("widgetTap", true)
+        set(v) = sb("widgetTap", v)
     var showOmer: Boolean
         get() = gb("showOmer", true)
         set(v) = sb("showOmer", v)

@@ -15,7 +15,8 @@ import android.widget.RemoteViews
 
 object Updater {
     const val ACTION = "com.example.hebdate.UPDATE"
-    private const val CH = "hebdate"
+    private const val CH = "date_v2"
+    private const val OLD_CH = "hebdate"
 
     fun lines(p: Prefs, i: Info): List<String> = listOfNotNull(
         i.omer.takeIf { p.showOmer && it.isNotBlank() },
@@ -43,8 +44,13 @@ object Updater {
     private fun notification(ctx: Context, p: Prefs, i: Info) {
         val nm = ctx.getSystemService(NotificationManager::class.java)
         if (!p.notifOn) { nm.cancel(1); return }
-        val ch = NotificationChannel(CH, "YomWise date", NotificationManager.IMPORTANCE_LOW)
+        // Android never lets an app raise an existing channel's importance, so this is a new channel
+        nm.deleteNotificationChannel(OLD_CH)
+        val ch = NotificationChannel(CH, "YomWise date", NotificationManager.IMPORTANCE_DEFAULT)
         ch.setShowBadge(false)
+        ch.setSound(null, null)
+        ch.enableVibration(false)
+        ch.enableLights(false)
         nm.createNotificationChannel(ch)
 
         val del = PendingIntent.getBroadcast(
@@ -97,7 +103,7 @@ object Updater {
                 line(R.id.w_candle, p.showCandle, i.candle)
                 line(R.id.w_zman, p.showZman, i.nextZman)
             }
-            rv.setOnClickPendingIntent(R.id.root, openApp(ctx))
+            if (p.widgetTap) rv.setOnClickPendingIntent(R.id.root, openApp(ctx))
             mgr.updateAppWidget(ids, rv)
         }
     }

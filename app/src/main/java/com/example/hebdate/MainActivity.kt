@@ -280,6 +280,9 @@ class MainActivity : Activity() {
         root.check("Stack month under day in icon", p.stackedIcon) { p.stackedIcon = it }
 
         // ---- Widget / details ----
+        root.header("Widget")
+        root.check("Open YomWise when the widget is tapped", p.widgetTap) { p.widgetTap = it }
+
         root.header("Show in widget and notification")
         root.check("Omer count (during the Omer)", p.showOmer) { p.showOmer = it }
         root.check("Parsha", p.showParsha) { p.showParsha = it }
