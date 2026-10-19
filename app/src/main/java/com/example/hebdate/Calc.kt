@@ -34,7 +34,7 @@ object Calc {
     fun compute(p: Prefs, now: Date = Date()): Info {
         val he = p.hebrew
         val tz = if (p.useDeviceTz) TimeZone.getDefault() else TimeZone.getTimeZone(p.tzId)
-        val geo = GeoLocation(p.name, p.lat, p.lon, 0.0, tz)
+        val geo = GeoLocation(p.name, p.lat, p.lon, p.elevation.coerceIn(0.0, 9000.0), tz)
 
         val civil = Calendar.getInstance(tz)
         civil.time = now
@@ -126,10 +126,10 @@ object Calc {
         val zt = zc(geo, tomorrow, p.candleMin)
         fun list(z: ComplexZmanimCalendar) = listOf(
             (if (he) "עלות השחר" else "Alot") to z.getAlosHashachar(),
-            (if (he) "הנץ" else "Sunrise") to z.getSeaLevelSunrise(),
+            (if (he) "הנץ" else "Sunrise") to z.getSunrise(),
             (if (he) "סוף זמן שמע" else "Sof zman Shema") to z.getSofZmanShmaGRA(),
             (if (he) "חצות" else "Chatzos") to z.getChatzos(),
-            (if (he) "שקיעה" else "Sunset") to z.getSeaLevelSunset(),
+            (if (he) "שקיעה" else "Sunset") to (if (p.elevSunset) z.getSunset() else z.getSeaLevelSunset()),
             (if (he) "צאת הכוכבים" else "Nightfall") to z.getTzaisGeonim8Point5Degrees()
         )
         val next = (list(zToday) + list(zt))

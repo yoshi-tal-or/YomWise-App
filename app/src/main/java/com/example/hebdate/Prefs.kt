@@ -39,6 +39,12 @@ class Prefs(ctx: Context) {
     var hebrew: Boolean
         get() = gb("hebrew", true)
         set(v) = sb("hebrew", v)
+    var elevation: Double
+        get() = gs("elevation", "5").toDouble()
+        set(v) = ss("elevation", v.toString())
+    var elevSunset: Boolean
+        get() = gb("elevSunset", false)
+        set(v) = sb("elevSunset", v)
     var showYear: Boolean
         get() = gb("showYear", false)
         set(v) = sb("showYear", v)
