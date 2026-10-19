@@ -114,7 +114,7 @@ object Calc {
         if (sm != 6 && sd in 23..29) {
             val nx = sat.clone() as Calendar
             nx.add(Calendar.DATE, jcSat.getDaysInJewishMonth() - sd + 1)
-            mevorchim = (if (he) "שבת מברכים " else "Shabbat Mevorchim ") + hdf.formatMonth(JewishCalendar(nx))
+            mevorchim = (if (he) "מברכים " else "Mevorchim ") + hdf.formatMonth(JewishCalendar(nx))
         }
         val parsha = listOfNotNull(
             parshaBase.takeIf { it.isNotBlank() },
@@ -208,7 +208,7 @@ object Calc {
             .filter { it.second != null && it.second.after(now) }
             .minByOrNull { it.second.time }
         val nextZman = if (next != null)
-            (if (he) "הבא: " else "Next: ") + next.first + " " + fmt.format(next.second) else ""
+            (if (he) "הזמן הבא: " else "Next zman: ") + next.first + " " + fmt.format(next.second) else ""
 
         // When to refresh next
         val midnight = civil.clone() as Calendar

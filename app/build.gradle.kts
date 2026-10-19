@@ -6,7 +6,7 @@ android {
     namespace = "com.example.hebdate"
     compileSdk = 34
     defaultConfig {
-        applicationId = "com.example.hebdate"
+        applicationId = "com.yomwise.app"
         minSdk = 26
         targetSdk = 34
         val run = (System.getenv("GITHUB_RUN_NUMBER") ?: "1").toInt()
