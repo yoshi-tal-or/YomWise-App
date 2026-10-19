@@ -138,6 +138,13 @@ class MainActivity : Activity() {
         super.onCreate(savedInstanceState)
         p = Prefs(this)
 
+        actionBar?.let {
+            it.setIcon(R.drawable.yw_logo)
+            it.setDisplayUseLogoEnabled(false)
+            it.setDisplayShowHomeEnabled(true)
+            it.setDisplayShowTitleEnabled(true)
+        }
+
         if (Build.VERSION.SDK_INT >= 33 &&
             checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED
         ) {
