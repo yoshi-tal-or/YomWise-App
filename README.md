@@ -38,6 +38,10 @@ Requires Android 8.0 or newer.
 - The only network request is the optional "Look up elevation online"
   button, which sends your coordinates once to open-meteo.com when you tap it.
 
+## Download Link
+Version 1.15
+Google Drive link: https://drive.google.com/file/d/1mOtZK4GBPyVfnbtVGucKvte8tZxsFWiX/view
+
 ## Installing
 
 1. Download the latest APK from the **Actions** tab (open the newest
