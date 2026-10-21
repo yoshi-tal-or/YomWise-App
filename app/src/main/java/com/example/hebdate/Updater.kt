@@ -10,6 +10,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Icon
+import android.os.Build
 import android.view.View
 import android.widget.RemoteViews
 
@@ -29,7 +30,11 @@ object Updater {
 
     fun refresh(ctx: Context) {
         val p = Prefs(ctx)
-        val info = try { Calc.compute(p) } catch (e: Exception) { null } ?: return
+        val info = try { Calc.compute(p) } catch (e: Exception) { null }
+        if (info == null) {
+            schedule(ctx, System.currentTimeMillis() + 15 * 60 * 1000L)
+            return
+        }
         try { notification(ctx, p, info) } catch (e: Exception) { }
         try { widgets(ctx, p, info) } catch (e: Exception) { }
         schedule(ctx, info.nextChange)
@@ -114,6 +119,12 @@ object Updater {
             ctx, 2, Intent(ctx, UpdateReceiver::class.java).setAction(ACTION),
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
-        am.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, at, pi)
+        val canExact = Build.VERSION.SDK_INT < Build.VERSION_CODES.S || am.canScheduleExactAlarms()
+        try {
+            if (canExact) am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, at, pi)
+            else am.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, at, pi)
+        } catch (e: SecurityException) {
+            am.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, at, pi)
+        }
     }
 }
