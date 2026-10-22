@@ -39,8 +39,8 @@ Requires Android 8.0 or newer.
   button, which sends your coordinates once to open-meteo.com when you tap it.
 
 ## Download Link
-Version 1.15
-Google Drive link: https://drive.google.com/file/d/1mOtZK4GBPyVfnbtVGucKvte8tZxsFWiX/view
+Version 1.17
+Google Drive download link: https://drive.google.com/file/d/1j99YPTpMaq4leOdnRoBjhQsjrbMtokWI/view?usp=drive_link
 
 ## Installing
 
